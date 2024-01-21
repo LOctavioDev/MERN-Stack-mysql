@@ -34,8 +34,12 @@ export const createTask = async (req, res) => {
   });
 };
 
-export const updateTask = (req, res) => {
-  res.send("actualizando tarea");
+export const updateTask = async (req, res) => {
+  const result = await pool.query("UPDATE tbb_task SET ? WHERE id = ?", [
+    req.body,
+    req.params.id,
+  ]);
+  res.json(result)
 };
 
 export const delteTask = async (req, res) => {
@@ -43,9 +47,9 @@ export const delteTask = async (req, res) => {
     req.params.id,
   ]);
 
-  if(result.affectedRows === 0){
-    return res.status(404).json({message: "Task not found"})
+  if (result.affectedRows === 0) {
+    return res.status(404).json({ message: "Task not found" });
   }
 
-  return res.sendStatus(204)
+  return res.sendStatus(204);
 };
