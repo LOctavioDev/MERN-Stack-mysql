@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
-import { getTasksRequest } from "../api/task.api";
 import TaskCard from "../components/TaskCard";
+import { useTask } from "../context/taskProvider";
 
 function TaskPage() {
-  const [tasks, setTasks] = useState([])
+  const {tasks, loadTasks} = useTask();
 
   useEffect(() => {
-    async function loadTasks() {
-      try {
-        const data = await getTasksRequest()
-        setTasks(data);
-      } catch (error) {
-        console.error("Error al obtener las tareas:", error)
-      }
-    }
     loadTasks();
   }, []);
 
